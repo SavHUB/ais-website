@@ -24,49 +24,49 @@ export function ShiftComparison() {
                 icon="●"
                 color="text-blue-400"
                 label="Primary Function"
-                description="Looks good. Hopes people buy."
+                description="Showcases products and services. Passive lead generation."
               />
               <Item
                 icon="●"
                 color="text-blue-400"
                 label="Lead Capture"
-                description="Forms that annoy visitors. 30% completion. No follow-up."
+                description="Standard contact forms with 20-30% completion rates and inconsistent follow-up."
               />
               <Item
                 icon="●"
                 color="text-blue-400"
                 label="Visitor Experience"
-                description="Generic. Same experience for everyone."
+                description="Static, uniform experience. Same content shown to every visitor."
               />
               <Item
                 icon="●"
                 color="text-blue-400"
-                label="Follow-Up"
-                description="Manual emails. You remember. They don&apos;t."
+                label="Lead Nurturing"
+                description="Manual outreach required. Time-intensive, prone to delays."
               />
               <Item
                 icon="●"
                 color="text-blue-400"
-                label="SEO"
-                description="Static content. Hope it ranks."
+                label="Content Management"
+                description="Requires ongoing updates and maintenance. Subject to ranking fluctuations."
               />
               <Item
                 icon="●"
                 color="text-blue-400"
-                label="Data Insights"
-                description="Confusing analytics reports. No clear ROI."
+                label="Performance Tracking"
+                description="Basic metrics available. Difficult to correlate with actual revenue."
               />
               <Item
                 icon="●"
                 color="text-blue-400"
-                label="Your Time"
-                description="Hours updating, managing, troubleshooting."
+                label="Operational Effort"
+                description="Continuous updates and manual process management needed."
               />
               <Item
                 icon="●"
                 color="text-blue-400"
-                label="Revenue Impact"
-                description="Maybe some leads. No idea on ROI."
+                label="Revenue Attribution"
+                description="Unclear lead-to-revenue path. Hard to measure true ROI."
               />
             </div>
           </div>
@@ -81,49 +81,49 @@ export function ShiftComparison() {
                 icon="✓"
                 color="text-cyan-400"
                 label="Primary Function"
-                description="Captures leads 24/7. Qualifies automatically. Converts while you sleep."
+                description="24/7 AI-powered lead generation and qualification engine."
               />
               <Item
                 icon="✓"
                 color="text-cyan-400"
                 label="Lead Capture"
-                description="Conversational AI (70%+ completion). Instant qualification. Sorted by readiness."
+                description="Conversational AI with 65%+ completion rates. Instant lead qualification and segmentation."
               />
               <Item
                 icon="✓"
                 color="text-cyan-400"
                 label="Visitor Experience"
-                description="Dynamic personalization. Each visitor sees what converts THEM."
+                description="Dynamic, personalized interactions adapted to individual user behavior and interests."
               />
               <Item
                 icon="✓"
                 color="text-cyan-400"
-                label="Follow-Up"
-                description="Automated sequences at perfect timing. Never misses a lead."
+                label="Lead Nurturing"
+                description="Automated, intelligent follow-up sequences. Perfect timing, zero manual effort."
               />
               <Item
                 icon="✓"
                 color="text-cyan-400"
-                label="SEO"
-                description="Self-evolving (learns what ranks, optimizes daily)."
+                label="Content Management"
+                description="AI-optimized content that learns and improves. Continuous ranking optimization."
               />
               <Item
                 icon="✓"
                 color="text-cyan-400"
-                label="Data Insights"
-                description="Predictive intelligence. Know what&apos;s happening before it happens."
+                label="Performance Tracking"
+                description="Real-time dashboards with actionable insights. Lead quality and conversion metrics."
               />
               <Item
                 icon="✓"
                 color="text-cyan-400"
-                label="Your Time"
-                description="Set it and forget it. System manages itself."
+                label="Operational Effort"
+                description="Set once, runs automatically. Self-optimizing system requires minimal oversight."
               />
               <Item
                 icon="✓"
                 color="text-cyan-400"
-                label="Revenue Impact"
-                description="Measurable: X leads → Y revenue → Z profit"
+                label="Revenue Attribution"
+                description="Clear lead-to-revenue tracking. Measurable ROI on every campaign."
               />
             </div>
           </div>
