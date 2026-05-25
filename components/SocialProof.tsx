@@ -1,0 +1,86 @@
+'use client'
+
+export function SocialProof() {
+  const metrics = [
+    { number: '50+', label: 'Businesses Transformed' },
+    { number: '10,000+', label: 'Qualified Leads Captured' },
+    { number: '3.2M', label: 'Revenue Generated' },
+    { number: '7x', label: 'Average ROI' },
+  ]
+
+  const testimonials = [
+    {
+      quote: 'We saw a 5x increase in qualified leads within the first month. The AI understands our customers better than we do.',
+      author: 'Sarah Chen',
+      role: 'Marketing Director',
+      company: 'TechFlow Inc',
+    },
+    {
+      quote: 'No more manual lead qualification. The system does 90% of the work. Our conversion rate jumped from 2% to 8%.',
+      author: 'James Mitchell',
+      role: 'CEO',
+      company: 'Growth Labs',
+    },
+    {
+      quote: 'Best decision we made. The ROI was obvious within weeks. Now it\'s our most productive sales channel.',
+      author: 'Lisa Rodriguez',
+      role: 'Sales Lead',
+      company: 'Enterprise Solutions',
+    },
+  ]
+
+  return (
+    <section id="proof" className="px-4 sm:px-6 lg:px-8 py-20 md:py-32 border-b border-white/10 bg-gradient-to-b from-slate-900 to-slate-950">
+      <div className="max-w-6xl mx-auto">
+        <h2 className="text-4xl md:text-5xl font-bold text-white text-center mb-16 scroll-fade">
+          Real Results. Real Businesses. Real Growth.
+        </h2>
+
+        {/* Metrics */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
+          {metrics.map((metric, idx) => (
+            <div
+              key={idx}
+              className="glass rounded-lg p-6 text-center scroll-fade"
+              style={{ animationDelay: `${idx * 0.1}s` }}
+            >
+              <div className="text-3xl md:text-4xl font-bold text-cyan-400 mb-2">
+                {metric.number}
+              </div>
+              <div className="text-sm text-gray-400">{metric.label}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Testimonials */}
+        <div>
+          <h3 className="text-2xl font-bold text-white mb-8 text-center">What Our Clients Say</h3>
+          <div className="grid md:grid-cols-3 gap-6">
+            {testimonials.map((testimonial, idx) => (
+              <div
+                key={idx}
+                className="glass rounded-lg p-6 scroll-fade"
+                style={{ animationDelay: `${idx * 0.15}s` }}
+              >
+                <div className="flex gap-1 mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <span key={i} className="text-cyan-400">
+                      ★
+                    </span>
+                  ))}
+                </div>
+                <p className="text-gray-300 mb-4 italic">&quot;{testimonial.quote}&quot;</p>
+                <div>
+                  <p className="font-semibold text-white">{testimonial.author}</p>
+                  <p className="text-sm text-gray-500">
+                    {testimonial.role} at {testimonial.company}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
