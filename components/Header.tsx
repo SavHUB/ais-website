@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { Menu, X, Sun, Moon } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTheme } from 'next-themes'
+import Link from 'next/link'
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -23,6 +24,7 @@ export function Header() {
   const navLinks = [
     { label: 'Features', href: '#features' },
     { label: 'Proof', href: '#proof' },
+    { label: 'Case Studies', href: '/case-studies' },
     { label: 'FAQ', href: '#faq' },
   ]
 
@@ -47,13 +49,13 @@ export function Header() {
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.href}
                 href={link.href}
                 className="text-slate-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-cyan-400 transition-colors text-sm font-medium"
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </nav>
 
@@ -95,14 +97,14 @@ export function Header() {
             >
               <div className="pb-4 pt-2 flex flex-col gap-3">
                 {navLinks.map((link) => (
-                  <a
+                  <Link
                     key={link.href}
                     href={link.href}
                     className="text-slate-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-cyan-400 transition-colors text-sm py-2 font-medium"
                     onClick={() => setMobileOpen(false)}
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 ))}
                 <button className="w-full mt-2 px-4 py-3 rounded bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition-transform hover:scale-105 active:scale-95 shadow-md">
                   Get Started

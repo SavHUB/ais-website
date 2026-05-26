@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import AnimatedStat from './AnimatedStat'
 
 export function SocialProof() {
   const metrics = [
@@ -45,21 +46,59 @@ export function SocialProof() {
 
         {/* Metrics */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
-          {metrics.map((metric, idx) => (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
-              key={idx}
-              className="glass rounded-lg p-6 text-center hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(0,212,255,0.15)] transition-all duration-300"
-            >
-              <div className="text-3xl md:text-4xl font-bold text-cyan-400 mb-2">
-                {metric.number}
-              </div>
-              <div className="text-sm text-gray-400">{metric.label}</div>
-            </motion.div>
-          ))}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="glass rounded-lg p-6 text-center hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(0,212,255,0.15)] transition-all duration-300"
+          >
+            <AnimatedStat
+              value={50}
+              label="Businesses Transformed"
+              suffix="+"
+              highlightColor="text-cyan-400"
+            />
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="glass rounded-lg p-6 text-center hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(0,212,255,0.15)] transition-all duration-300"
+          >
+            <AnimatedStat
+              value={10000}
+              label="Qualified Leads Captured"
+              suffix="+"
+              highlightColor="text-cyan-400"
+            />
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="glass rounded-lg p-6 text-center hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(0,212,255,0.15)] transition-all duration-300"
+          >
+            <AnimatedStat
+              value="3.2M"
+              label="Revenue Generated"
+              highlightColor="text-cyan-400"
+            />
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+            className="glass rounded-lg p-6 text-center hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(0,212,255,0.15)] transition-all duration-300"
+          >
+            <AnimatedStat
+              value="7x"
+              label="Average ROI"
+              highlightColor="text-cyan-400"
+            />
+          </motion.div>
         </div>
 
         {/* Testimonials */}

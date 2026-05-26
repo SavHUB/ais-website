@@ -3,8 +3,11 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Sparkles, Send, Loader2, CheckCircle2 } from 'lucide-react'
+import InteractiveDemo from './InteractiveDemo'
+import AnimatedStat from './AnimatedStat'
 
 export function Hero() {
+  const [showDemo, setShowDemo] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const [messages, setMessages] = useState<{role: 'ai' | 'user', text: string}[]>([])
   
@@ -88,30 +91,36 @@ export function Hero() {
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mb-12">
               <button
-                onClick={() => setShowModal(true)}
+                onClick={() => setShowDemo(true)}
                 className="px-8 py-3 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold shadow-lg hover:shadow-[0_0_20px_rgba(0,102,255,0.4)] transition-all hover:scale-105 active:scale-95"
               >
                 See Your Lead Potential
               </button>
-              <button className="px-8 py-3 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 text-white font-semibold transition-all hover:scale-105 active:scale-95">
+              <button
+                onClick={() => setShowDemo(true)}
+                className="px-8 py-3 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 text-white font-semibold transition-all hover:scale-105 active:scale-95"
+              >
                 Watch Demo
               </button>
             </div>
 
             {/* Stats */}
             <div className="grid grid-cols-3 gap-4 text-left border-t border-white/10 pt-8">
-              <div>
-                <div className="text-2xl font-bold text-white">70%</div>
-                <div className="text-xs text-gray-500 mt-1">Form Completion</div>
-              </div>
+              <AnimatedStat
+                value={70}
+                label="Form Completion"
+                isPercentage={true}
+                highlightColor="text-white"
+              />
               <div>
                 <div className="text-2xl font-bold text-white">24/7</div>
                 <div className="text-xs text-gray-500 mt-1">Lead Capture</div>
               </div>
-              <div>
-                <div className="text-2xl font-bold text-cyan-400">5-10x</div>
-                <div className="text-xs text-gray-500 mt-1">More Conversions</div>
-              </div>
+              <AnimatedStat
+                value="5-10x"
+                label="More Conversions"
+                highlightColor="text-cyan-400"
+              />
             </div>
           </motion.div>
 
@@ -175,6 +184,9 @@ export function Hero() {
           </motion.div>
         </div>
       </section>
+
+      {/* Interactive Demo */}
+      <InteractiveDemo isOpen={showDemo} onClose={() => setShowDemo(false)} />
 
       {/* Lead Modal */}
       {showModal && (

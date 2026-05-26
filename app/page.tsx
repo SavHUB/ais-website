@@ -1,6 +1,7 @@
 import { Header } from '@/components/Header'
 import { Hero } from '@/components/Hero'
 import { ShiftComparison } from '@/components/ShiftComparison'
+import ROICalculator from '@/components/ROICalculator'
 import { FeaturesAccordion } from '@/components/FeaturesAccordion'
 import { SocialProof } from '@/components/SocialProof'
 import { FAQ } from '@/components/FAQ'
@@ -12,6 +13,7 @@ export default function Home() {
       <Header />
       <Hero />
       <ShiftComparison />
+      <ROICalculator />
       <FeaturesAccordion />
       <SocialProof />
       <FAQ />
