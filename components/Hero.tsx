@@ -116,9 +116,9 @@ export function Hero() {
                 isPercentage={true}
                 highlightColor="text-white"
               />
-              <div>
-                <div className="text-lg md:text-xl font-bold text-white">24/7</div>
-                <div className="text-xs text-gray-500 mt-1">Always on</div>
+              <div className="text-center">
+                <div className="text-3xl md:text-4xl font-bold text-white mb-2">24/7</div>
+                <div className="text-xs md:text-sm text-gray-500">Always on</div>
               </div>
               <AnimatedStat
                 value="5–10x"
