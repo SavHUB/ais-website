@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { ChevronDown } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
 
 const features = [
   {
@@ -89,25 +90,33 @@ export function FeaturesAccordion() {
   return (
     <section id="features" className="px-4 sm:px-6 lg:px-8 py-20 md:py-32 border-b border-white/10">
       <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 scroll-fade">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
             The Components of Your AI Machine
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto scroll-fade">
+          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
             Every element is designed to do one thing: move prospects from aware to customer. No bloat. Pure conversion architecture.
           </p>
-        </div>
+        </motion.div>
 
         <div className="space-y-3">
           {features.map((feature, idx) => (
-            <div
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1 }}
               key={idx}
-              className="scroll-fade border border-white/10 rounded-lg overflow-hidden transition-all duration-300"
-              style={{ animationDelay: `${idx * 0.1}s` }}
+              className="border border-white/10 rounded-lg overflow-hidden transition-all duration-300 bg-white/[0.02]"
             >
               <button
                 onClick={() => setExpanded(expanded === idx ? null : idx)}
-                className="w-full px-6 py-4 flex items-center justify-between hover:bg-white/5 transition-colors bg-white/[0.02]"
+                className="w-full px-6 py-4 flex items-center justify-between hover:bg-white/5 transition-colors"
               >
                 <span className="text-lg font-semibold text-white text-left">{feature.title}</span>
                 <ChevronDown
@@ -118,29 +127,39 @@ export function FeaturesAccordion() {
                 />
               </button>
 
-              {expanded === idx && (
-                <div className="px-6 py-4 bg-blue-950/20 border-t border-white/10">
-                  <div className="mb-4">
-                    <p className="font-semibold text-white mb-2">What it does:</p>
-                    <ul className="space-y-2">
-                      {feature.details.map((detail, i) => (
-                        <li key={i} className="flex gap-2 text-gray-400 text-sm">
-                          <span className="text-cyan-400">•</span>
-                          <span>{detail}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+              <AnimatePresence>
+                {expanded === idx && (
+                  <motion.div 
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="overflow-hidden"
+                  >
+                    <div className="px-6 py-4 bg-blue-950/20 border-t border-white/10">
+                      <div className="mb-4">
+                        <p className="font-semibold text-white mb-2">What it does:</p>
+                        <ul className="space-y-2">
+                          {feature.details.map((detail, i) => (
+                            <li key={i} className="flex gap-2 text-gray-400 text-sm">
+                              <span className="text-cyan-400">•</span>
+                              <span>{detail}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
 
-                  <div className="bg-blue-900/20 border border-blue-500/20 rounded p-4">
-                    <p className="text-sm">
-                      <strong className="text-cyan-400">The ROI Angle:</strong>
-                      <span className="text-gray-400 ml-2">{feature.roi}</span>
-                    </p>
-                  </div>
-                </div>
-              )}
-            </div>
+                      <div className="bg-blue-900/20 border border-blue-500/20 rounded p-4">
+                        <p className="text-sm">
+                          <strong className="text-cyan-400">The ROI Angle:</strong>
+                          <span className="text-gray-400 ml-2">{feature.roi}</span>
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
           ))}
         </div>
       </div>

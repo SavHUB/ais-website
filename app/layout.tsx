@@ -1,10 +1,9 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import { Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
-const _geist = Geist({ subsets: ["latin"] });
-const _geistMono = Geist_Mono({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: 'AIS Machine | AI-Powered Lead Generation Platform',
@@ -36,7 +35,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark bg-slate-950">
-      <body className="font-sans antialiased bg-slate-950 text-white">
+      <body className={`${inter.className} antialiased bg-slate-950 text-white`}>
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>

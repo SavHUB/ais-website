@@ -1,5 +1,7 @@
 'use client'
 
+import { motion } from 'framer-motion'
+
 export function SocialProof() {
   const metrics = [
     { number: '50+', label: 'Businesses Transformed' },
@@ -30,37 +32,55 @@ export function SocialProof() {
   ]
 
   return (
-    <section id="proof" className="px-4 sm:px-6 lg:px-8 py-20 md:py-32 border-b border-white/10 bg-gradient-to-b from-slate-900 to-slate-950">
+    <section id="proof" className="px-4 sm:px-6 lg:px-8 py-20 md:py-32 border-b border-white/10 bg-gradient-to-b from-slate-900 to-slate-950 overflow-hidden">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-4xl md:text-5xl font-bold text-white text-center mb-16 scroll-fade">
+        <motion.h2 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-4xl md:text-5xl font-bold text-white text-center mb-16"
+        >
           Real Results. Real Businesses. Real Growth.
-        </h2>
+        </motion.h2>
 
         {/* Metrics */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
           {metrics.map((metric, idx) => (
-            <div
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1 }}
               key={idx}
-              className="glass rounded-lg p-6 text-center scroll-fade"
-              style={{ animationDelay: `${idx * 0.1}s` }}
+              className="glass rounded-lg p-6 text-center hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(0,212,255,0.15)] transition-all duration-300"
             >
               <div className="text-3xl md:text-4xl font-bold text-cyan-400 mb-2">
                 {metric.number}
               </div>
               <div className="text-sm text-gray-400">{metric.label}</div>
-            </div>
+            </motion.div>
           ))}
         </div>
 
         {/* Testimonials */}
         <div>
-          <h3 className="text-2xl font-bold text-white mb-8 text-center">What Our Clients Say</h3>
+          <motion.h3 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-2xl font-bold text-white mb-8 text-center"
+          >
+            What Our Clients Say
+          </motion.h3>
           <div className="grid md:grid-cols-3 gap-6">
             {testimonials.map((testimonial, idx) => (
-              <div
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.15 }}
                 key={idx}
-                className="glass rounded-lg p-6 scroll-fade"
-                style={{ animationDelay: `${idx * 0.15}s` }}
+                className="glass rounded-lg p-6 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(0,212,255,0.15)] transition-all duration-300"
               >
                 <div className="flex gap-1 mb-4">
                   {[...Array(5)].map((_, i) => (
@@ -76,7 +96,7 @@ export function SocialProof() {
                     {testimonial.role} at {testimonial.company}
                   </p>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>

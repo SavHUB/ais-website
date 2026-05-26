@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { Menu, X } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -39,7 +40,7 @@ export function Header() {
 
           {/* CTA Button */}
           <div className="flex items-center gap-4">
-            <button className="hidden sm:inline-flex px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition-colors">
+            <button className="hidden sm:inline-flex px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition-transform hover:scale-105 active:scale-95">
               Get Started
             </button>
 
@@ -54,23 +55,33 @@ export function Header() {
         </div>
 
         {/* Mobile Nav */}
-        {mobileOpen && (
-          <nav className="md:hidden pb-4 flex flex-col gap-3">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="text-gray-400 hover:text-cyan-400 transition-colors text-sm py-2"
-                onClick={() => setMobileOpen(false)}
-              >
-                {link.label}
-              </a>
-            ))}
-            <button className="w-full mt-2 px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition-colors">
-              Get Started
-            </button>
-          </nav>
-        )}
+        <AnimatePresence>
+          {mobileOpen && (
+            <motion.nav
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.2 }}
+              className="md:hidden flex flex-col gap-3 overflow-hidden"
+            >
+              <div className="pb-4 pt-2 flex flex-col gap-3">
+                {navLinks.map((link) => (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    className="text-gray-400 hover:text-cyan-400 transition-colors text-sm py-2"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    {link.label}
+                  </a>
+                ))}
+                <button className="w-full mt-2 px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition-transform hover:scale-105 active:scale-95">
+                  Get Started
+                </button>
+              </div>
+            </motion.nav>
+          )}
+        </AnimatePresence>
       </div>
     </header>
   )
