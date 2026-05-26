@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import { ThemeProvider } from '@/components/theme-provider'
 import './globals.css'
 
 const inter = Inter({ subsets: ["latin"] });
@@ -9,6 +10,27 @@ export const metadata: Metadata = {
   title: 'AIS Machine | AI-Powered Lead Generation Platform',
   description: 'Transform your website into a 24/7 AI sales machine. Capture leads, qualify prospects, and convert customers automatically.',
   generator: 'v0.app',
+  openGraph: {
+    title: 'AIS Machine | AI-Powered Lead Generation Platform',
+    description: 'Transform your website into a 24/7 AI sales machine. Capture leads, qualify prospects, and convert customers automatically.',
+    url: 'https://ais-machine.com',
+    siteName: 'AIS Machine',
+    images: [
+      {
+        url: 'https://ais-machine.com/og-image.png', // Replace with actual OG image URL later
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'AIS Machine | AI-Powered Lead Generation Platform',
+    description: 'Transform your website into a 24/7 AI sales machine.',
+    images: ['https://ais-machine.com/og-image.png'], // Replace with actual OG image URL later
+  },
   icons: {
     icon: [
       {
@@ -34,9 +56,11 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="dark bg-slate-950">
-      <body className={`${inter.className} antialiased bg-slate-950 text-white`}>
-        {children}
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${inter.className} antialiased bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white transition-colors duration-300`}>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          {children}
+        </ThemeProvider>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>

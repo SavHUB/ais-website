@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { ChevronDown } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
 
 const faqs = [
   {
@@ -42,21 +43,29 @@ export function FAQ() {
   return (
     <section id="faq" className="px-4 sm:px-6 lg:px-8 py-20 md:py-32 border-b border-white/10">
       <div className="max-w-3xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 scroll-fade">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
             Frequently Asked Questions
           </h2>
-          <p className="text-gray-400 text-lg scroll-fade">
+          <p className="text-gray-400 text-lg">
             Everything you need to know about AIS Machine.
           </p>
-        </div>
+        </motion.div>
 
         <div className="space-y-3">
           {faqs.map((faq, idx) => (
-            <div
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.05 }}
               key={idx}
-              className="scroll-fade border border-white/10 rounded-lg overflow-hidden transition-all"
-              style={{ animationDelay: `${idx * 0.05}s` }}
+              className="border border-white/10 rounded-lg overflow-hidden transition-all bg-white/[0.02]"
             >
               <button
                 onClick={() => setExpanded(expanded === idx ? null : idx)}
@@ -71,22 +80,37 @@ export function FAQ() {
                 />
               </button>
 
-              {expanded === idx && (
-                <div className="px-6 py-4 bg-blue-950/20 border-t border-white/10">
-                  <p className="text-gray-300 leading-relaxed">{faq.answer}</p>
-                </div>
-              )}
-            </div>
+              <AnimatePresence>
+                {expanded === idx && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="overflow-hidden"
+                  >
+                    <div className="px-6 py-4 bg-blue-950/20 border-t border-white/10">
+                      <p className="text-gray-300 leading-relaxed">{faq.answer}</p>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
           ))}
         </div>
 
         {/* Final CTA */}
-        <div className="mt-16 text-center">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-16 text-center"
+        >
           <p className="text-gray-400 mb-6">Still have questions?</p>
-          <button className="px-8 py-3 rounded-lg bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold transition-all shadow-lg hover:shadow-xl">
+          <button className="px-8 py-3 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-500 hover:shadow-[0_0_20px_rgba(0,102,255,0.4)] text-white font-semibold transition-all hover:scale-105 active:scale-95 shadow-lg">
             Schedule a Demo
           </button>
-        </div>
+        </motion.div>
       </div>
     </section>
   )

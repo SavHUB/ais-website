@@ -2,11 +2,16 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Sparkles, Send } from 'lucide-react'
+import { Sparkles, Send, Loader2, CheckCircle2 } from 'lucide-react'
 
 export function Hero() {
   const [showModal, setShowModal] = useState(false)
   const [messages, setMessages] = useState<{role: 'ai' | 'user', text: string}[]>([])
+  
+  // Form state
+  const [formData, setFormData] = useState({ name: '', email: '', company: '' })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSuccess, setIsSuccess] = useState(false)
 
   // Simulate an AI chat sequence
   useEffect(() => {
@@ -29,6 +34,32 @@ export function Hero() {
 
     return () => timeouts.forEach(clearTimeout)
   }, [])
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    
+    try {
+      const response = await fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      })
+      
+      if (response.ok) {
+        setIsSuccess(true)
+        setTimeout(() => {
+          setShowModal(false)
+          setIsSuccess(false)
+          setFormData({ name: '', email: '', company: '' })
+        }, 3000)
+      }
+    } catch (error) {
+      console.error('Error capturing lead:', error)
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
 
   return (
     <>
@@ -153,33 +184,60 @@ export function Hero() {
             animate={{ opacity: 1, scale: 1 }}
             className="glass-dark border border-white/10 rounded-xl max-w-md w-full p-8 shadow-2xl relative"
           >
-            <h2 className="text-2xl font-bold text-white mb-2">Your Lead Potential</h2>
-            <p className="text-gray-400 mb-6 text-sm">
-              Tell us about your business. We&apos;ll estimate how many qualified leads you could capture with AIS.
-            </p>
-            <form className="space-y-4">
-              <input
-                type="text"
-                placeholder="Your Name"
-                className="w-full px-4 py-3 rounded-lg bg-black/20 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition-colors"
-              />
-              <input
-                type="email"
-                placeholder="Your Email"
-                className="w-full px-4 py-3 rounded-lg bg-black/20 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition-colors"
-              />
-              <input
-                type="text"
-                placeholder="Company Website"
-                className="w-full px-4 py-3 rounded-lg bg-black/20 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition-colors"
-              />
-              <button
-                type="submit"
-                className="w-full px-4 py-3 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold hover:shadow-[0_0_20px_rgba(0,102,255,0.4)] transition-all hover:scale-105 active:scale-95 mt-2"
-              >
-                Calculate My Potential
-              </button>
-            </form>
+            {!isSuccess ? (
+              <>
+                <h2 className="text-2xl font-bold text-white mb-2">Your Lead Potential</h2>
+                <p className="text-gray-400 mb-6 text-sm">
+                  Tell us about your business. We&apos;ll estimate how many qualified leads you could capture with AIS.
+                </p>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <input
+                    type="text"
+                    required
+                    value={formData.name}
+                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                    placeholder="Your Name"
+                    className="w-full px-4 py-3 rounded-lg bg-black/20 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition-colors"
+                  />
+                  <input
+                    type="email"
+                    required
+                    value={formData.email}
+                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                    placeholder="Your Email"
+                    className="w-full px-4 py-3 rounded-lg bg-black/20 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition-colors"
+                  />
+                  <input
+                    type="text"
+                    required
+                    value={formData.company}
+                    onChange={(e) => setFormData({...formData, company: e.target.value})}
+                    placeholder="Company Website"
+                    className="w-full px-4 py-3 rounded-lg bg-black/20 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition-colors"
+                  />
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold hover:shadow-[0_0_20px_rgba(0,102,255,0.4)] transition-all hover:scale-105 active:scale-95 mt-2 disabled:opacity-50 disabled:hover:scale-100 disabled:cursor-not-allowed"
+                  >
+                    {isSubmitting ? <Loader2 size={20} className="animate-spin" /> : 'Calculate My Potential'}
+                  </button>
+                </form>
+              </>
+            ) : (
+              <div className="py-8 text-center flex flex-col items-center">
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: "spring", bounce: 0.5 }}
+                >
+                  <CheckCircle2 size={64} className="text-cyan-400 mb-4" />
+                </motion.div>
+                <h3 className="text-2xl font-bold text-white mb-2">Request Received!</h3>
+                <p className="text-gray-400">Our team will be in touch shortly with your custom lead generation report.</p>
+              </div>
+            )}
+            
             <button
               onClick={() => setShowModal(false)}
               className="absolute top-4 right-4 text-gray-400 hover:text-white bg-white/5 w-8 h-8 flex items-center justify-center rounded-full transition-colors"
@@ -192,3 +250,4 @@ export function Hero() {
     </>
   )
 }
+
