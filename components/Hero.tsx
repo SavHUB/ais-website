@@ -117,7 +117,7 @@ export function Hero() {
                 highlightColor="text-white"
               />
               <div>
-                <div className="text-2xl font-bold text-white">24/7</div>
+                <div className="text-lg md:text-xl font-bold text-white">24/7</div>
                 <div className="text-xs text-gray-500 mt-1">Always on</div>
               </div>
               <AnimatedStat
