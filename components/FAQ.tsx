@@ -18,7 +18,7 @@ const faqs = [
   {
     question: 'Does this work for our industry?',
     answer:
-      'AIS has been applied across B2B SaaS, professional services, agencies, consultancies, and e-commerce. The underlying principle is the same: engage visitors at the right moment with the right conversation. If your business depends on website traffic converting into enquiries or customers, it's a strong fit.',
+      'AIS has been applied across B2B SaaS, professional services, agencies, consultancies, and e-commerce. The underlying principle is the same: engage visitors at the right moment with the right conversation. If your business depends on website traffic converting into enquiries or customers, it&apos;s a strong fit.',
   },
   {
     question: 'Will it integrate with the tools we already use?',
