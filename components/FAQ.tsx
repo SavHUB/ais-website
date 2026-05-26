@@ -8,7 +8,7 @@ const faqs = [
   {
     question: 'How quickly can we expect to see results?',
     answer:
-      'Most clients see meaningful changes within the first two weeks — typically in lead volume and engagement rates. Conversion quality tends to improve further over the following month as the AI learns from your specific visitor behaviour. We'll set clear benchmarks at the start so you know what to look for.',
+      'Most clients see meaningful changes within the first two weeks — typically in lead volume and engagement rates. Conversion quality tends to improve further over the following month as the AI learns from your specific visitor behaviour. We&apos;ll set clear benchmarks at the start so you know what to look for.',
   },
   {
     question: 'Is there a long-term contract?',
