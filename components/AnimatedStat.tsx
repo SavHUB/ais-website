@@ -56,7 +56,7 @@ export default function AnimatedStat({
       }
     }
 
-    const controls = count.set(0);
+    count.set(0);
 
     const timeout = setTimeout(() => {
       count.set(numValue);

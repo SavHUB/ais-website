@@ -6,34 +6,34 @@ import { motion, AnimatePresence } from 'framer-motion'
 
 const faqs = [
   {
-    question: 'How quickly will I see results?',
+    question: 'How quickly can we expect to see results?',
     answer:
-      'Most clients see measurable improvements within 7-14 days. Lead capture increases typically show within the first week, with conversion optimization taking 2-4 weeks to fully optimize based on real visitor data.',
+      'Most clients see meaningful changes within the first two weeks — typically in lead volume and engagement rates. Conversion quality tends to improve further over the following month as the AI learns from your specific visitor behaviour. We'll set clear benchmarks at the start so you know what to look for.',
   },
   {
-    question: 'Do you require long-term contracts?',
+    question: 'Is there a long-term contract?',
     answer:
-      'No. We believe in proving value month-over-month. Choose the plan that works for you, and cancel anytime. Most clients stay because the ROI speaks for itself.',
+      'No. We work month-to-month because we'd rather earn your business every month than lock you in. The clients who stay do so because the results justify it — not because they have to.',
   },
   {
-    question: 'Will it work for my industry?',
+    question: 'Does this work for our industry?',
     answer:
-      'Yes. Our AI adapts to any industry: B2B SaaS, professional services, e-commerce, real estate, agencies, coaches, consultants. If visitors matter, we can convert more of them.',
+      'AIS has been applied across B2B SaaS, professional services, agencies, consultancies, and e-commerce. The underlying principle is the same: engage visitors at the right moment with the right conversation. If your business depends on website traffic converting into enquiries or customers, it's a strong fit.',
   },
   {
-    question: 'Can you integrate with my existing tools?',
+    question: 'Will it integrate with the tools we already use?',
     answer:
-      'Absolutely. We integrate with your CRM, email platform, analytics, and payment systems. Our API is flexible—if we don\'t have a pre-built integration, we can custom-build one.',
+      'Yes. AIS connects with CRMs (HubSpot, Salesforce, Pipedrive), calendars, email platforms, and analytics tools. If you use something less common, we'll check compatibility before you commit. We don't want you to sign up only to discover a blocker.',
   },
   {
-    question: 'What about data privacy and security?',
+    question: 'How do you handle data privacy and compliance?',
     answer:
-      'Enterprise-grade security. GDPR & CCPA compliant. Your data is encrypted at rest and in transit. We run on AWS with SOC 2 Type II certification. Your privacy is non-negotiable.',
+      'We take this seriously. AIS is GDPR and CCPA compliant. Data is encrypted in transit and at rest. We don't sell or share your visitor data with third parties. Full documentation is available on request — we're happy to walk you through it.',
   },
   {
-    question: 'How is this different from chatbot builders?',
+    question: 'How is this different from a standard chatbot?',
     answer:
-      'Chatbots answer questions. AIS closes deals. We go beyond support—we qualify, personalize, route, and nurture. Every conversation is designed for conversion, not just engagement.',
+      'Most chatbots are designed to answer common support questions. AIS is built specifically around the sales qualification process — understanding visitor intent, asking the right questions, and routing promising conversations to your team. It's less about answering FAQs and more about having productive first conversations at scale.',
   },
 ]
 
@@ -42,18 +42,36 @@ export function FAQ() {
 
   return (
     <section id="faq" className="px-4 sm:px-6 lg:px-8 py-20 md:py-32 border-b border-white/10">
+      {/* FAQ JSON-LD for Google rich results */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: faqs.map((faq) => ({
+              '@type': 'Question',
+              name: faq.question,
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: faq.answer,
+              },
+            })),
+          }),
+        }}
+      />
       <div className="max-w-3xl mx-auto">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="text-center mb-12"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Frequently Asked Questions
+            Common questions
           </h2>
           <p className="text-gray-400 text-lg">
-            Everything you need to know about AIS Machine.
+            Straightforward answers to the things people usually ask before getting started.
           </p>
         </motion.div>
 
@@ -64,11 +82,12 @@ export function FAQ() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.05 }}
-              key={idx}
-              className="border border-white/10 rounded-lg overflow-hidden transition-all bg-white/[0.02]"
+              key={faq.question.slice(0, 30)}
+              className="border border-white/10 rounded-lg overflow-hidden bg-white/[0.02]"
             >
               <button
                 onClick={() => setExpanded(expanded === idx ? null : idx)}
+                aria-expanded={expanded === idx}
                 className="w-full px-6 py-4 flex items-center justify-between hover:bg-white/5 transition-colors text-left"
               >
                 <span className="font-semibold text-white">{faq.question}</span>
@@ -100,16 +119,19 @@ export function FAQ() {
         </div>
 
         {/* Final CTA */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="mt-16 text-center"
         >
-          <p className="text-gray-400 mb-6">Still have questions?</p>
-          <button className="px-8 py-3 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-500 hover:shadow-[0_0_20px_rgba(0,102,255,0.4)] text-white font-semibold transition-all hover:scale-105 active:scale-95 shadow-lg">
-            Schedule a Demo
-          </button>
+          <p className="text-gray-400 mb-6">Have a question that isn't covered here?</p>
+          <a
+            href="mailto:hello@ais-machine.com"
+            className="inline-block px-8 py-3 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-500 hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] text-white font-semibold transition-all hover:scale-105 active:scale-95 shadow-lg"
+          >
+            Get in touch
+          </a>
         </motion.div>
       </div>
     </section>

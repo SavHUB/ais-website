@@ -40,40 +40,9 @@
   --sidebar-ring: #0066ff;
 }
 
-.dark {
-  --background: #0a0e27;
-  --foreground: #ffffff;
-  --card: #111827;
-  --card-foreground: #ffffff;
-  --popover: #111827;
-  --popover-foreground: #ffffff;
-  --primary: #0066ff;
-  --primary-foreground: #ffffff;
-  --secondary: #00d4ff;
-  --secondary-foreground: #000000;
-  --muted: #6b7280;
-  --muted-foreground: #d1d5db;
-  --accent: #00d4ff;
-  --accent-foreground: #000000;
-  --destructive: #ef4444;
-  --destructive-foreground: #ffffff;
-  --border: #1f2937;
-  --input: #1f2937;
-  --ring: #0066ff;
-  --chart-1: #0066ff;
-  --chart-2: #00d4ff;
-  --chart-3: #3b82f6;
-  --chart-4: #06b6d4;
-  --chart-5: #0ea5e9;
-  --sidebar: #111827;
-  --sidebar-foreground: #ffffff;
-  --sidebar-primary: #0066ff;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #00d4ff;
-  --sidebar-accent-foreground: #000000;
-  --sidebar-border: #1f2937;
-  --sidebar-ring: #0066ff;
-}
+/* .dark class intentionally removed — this site uses a dark theme only.
+   All design tokens are defined in :root above. */
+
 
 /* AIS Custom Utilities */
 @layer utilities {

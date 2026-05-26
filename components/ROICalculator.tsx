@@ -38,7 +38,7 @@ export default function ROICalculator() {
   };
 
   return (
-    <section className="py-20 px-4 bg-slate-900/30">
+    <section id="roi-calculator" className="py-20 px-4 bg-slate-900/30">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
           <motion.div
@@ -61,7 +61,7 @@ export default function ROICalculator() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-4xl font-bold text-white mb-4"
           >
-            See Your Lead Potential
+            Estimate your lead potential
           </motion.h2>
 
           <motion.p
@@ -71,8 +71,7 @@ export default function ROICalculator() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-slate-400 text-lg"
           >
-            Enter your metrics to see how much revenue you're leaving on the
-            table
+            Enter your current numbers and see a projection of what a meaningful improvement in conversion could mean for your revenue.
           </motion.p>
         </div>
 
@@ -284,12 +283,18 @@ export default function ROICalculator() {
             transition={{ duration: 0.5, delay: 0.9 }}
             className="mt-10 flex flex-col sm:flex-row gap-4 justify-center"
           >
-            <button className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors">
-              See Pricing
+            <button
+              onClick={() => document.getElementById('faq')?.scrollIntoView({ behavior: 'smooth' })}
+              className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors hover:scale-105 active:scale-95"
+            >
+              How it works
             </button>
-            <button className="px-8 py-3 bg-slate-700 hover:bg-slate-600 text-white font-semibold rounded-lg transition-colors">
-              Schedule Demo
-            </button>
+            <a
+              href="mailto:hello@ais-machine.com?subject=Demo Request"
+              className="px-8 py-3 bg-slate-700 hover:bg-slate-600 text-white font-semibold rounded-lg transition-colors text-center hover:scale-105 active:scale-95"
+            >
+              Request a walkthrough
+            </a>
           </motion.div>
         </motion.div>
       </div>
