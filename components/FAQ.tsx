@@ -23,17 +23,17 @@ const faqs = [
   {
     question: 'Will it integrate with the tools we already use?',
     answer:
-      'Yes. AIS connects with CRMs (HubSpot, Salesforce, Pipedrive), calendars, email platforms, and analytics tools. If you use something less common, we'll check compatibility before you commit. We don't want you to sign up only to discover a blocker.',
+      'Yes. AIS connects with CRMs (HubSpot, Salesforce, Pipedrive), calendars, email platforms, and analytics tools. If you use something less common, we&apos;ll check compatibility before you commit. We don&apos;t want you to sign up only to discover a blocker.',
   },
   {
     question: 'How do you handle data privacy and compliance?',
     answer:
-      'We take this seriously. AIS is GDPR and CCPA compliant. Data is encrypted in transit and at rest. We don't sell or share your visitor data with third parties. Full documentation is available on request — we're happy to walk you through it.',
+      'We take this seriously. AIS is GDPR and CCPA compliant. Data is encrypted in transit and at rest. We don&apos;t sell or share your visitor data with third parties. Full documentation is available on request — we&apos;re happy to walk you through it.',
   },
   {
     question: 'How is this different from a standard chatbot?',
     answer:
-      'Most chatbots are designed to answer common support questions. AIS is built specifically around the sales qualification process — understanding visitor intent, asking the right questions, and routing promising conversations to your team. It's less about answering FAQs and more about having productive first conversations at scale.',
+      'Most chatbots are designed to answer common support questions. AIS is built specifically around the sales qualification process — understanding visitor intent, asking the right questions, and routing promising conversations to your team. It&apos;s less about answering FAQs and more about having productive first conversations at scale.',
   },
 ]
 
