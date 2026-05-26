@@ -13,7 +13,7 @@ const faqs = [
   {
     question: 'Is there a long-term contract?',
     answer:
-      'No. We work month-to-month because we'd rather earn your business every month than lock you in. The clients who stay do so because the results justify it — not because they have to.',
+      'No. We work month-to-month because we&apos;d rather earn your business every month than lock you in. The clients who stay do so because the results justify it — not because they have to.',
   },
   {
     question: 'Does this work for our industry?',
