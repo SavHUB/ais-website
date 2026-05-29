@@ -4,79 +4,84 @@ import { useState, useEffect } from 'react'
 import { Menu, X } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
-import { Logo } from './Logo'
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20)
-    }
-    window.addEventListener('scroll', handleScroll)
+    const handleScroll = () => setIsScrolled(window.scrollY > 20)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   const navLinks = [
-    { label: 'How it works', href: '#features' },
-    { label: 'Pricing', href: '#pricing' },
-    { label: 'Results', href: '#proof' },
-    { label: 'Blog', href: '/blog' },
-    { label: 'FAQ', href: '#faq' },
+    { label: 'Features',     href: '#features' },
+    { label: 'Results',      href: '#proof' },
+    { label: 'Case Studies', href: '/case-studies' },
+    { label: 'Pricing',      href: '#pricing' },
+    { label: 'FAQ',          href: '#faq' },
   ]
 
-  const scrollToDemo = () => {
-    const el = document.getElementById('roi-calculator')
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' })
-    }
-  }
-
   return (
-    <header 
-      className={`sticky top-0 z-50 border-b transition-all duration-300 ${
-        isScrolled 
-          ? 'border-white/10 backdrop-blur-md bg-slate-950/80' 
-          : 'border-transparent bg-transparent'
+    <header
+      className={`sticky top-0 z-50 transition-all duration-300 ${
+        isScrolled ? 'border-b border-white/[0.06]' : 'border-b border-transparent'
       }`}
+      style={{ backdropFilter: isScrolled ? 'blur(20px) saturate(180%)' : 'none',
+               background: isScrolled ? 'rgba(5,8,18,0.85)' : 'transparent' }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
+
           {/* Logo */}
-          <Logo />
+          <Link href="/" className="flex items-center gap-2.5">
+            <div
+              className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold text-sm shrink-0"
+              style={{ background: 'linear-gradient(135deg,#0066ff,#00d4ff)', boxShadow: '0 0 16px rgba(0,102,255,0.4)' }}
+            >
+              AI
+            </div>
+            <span className="text-lg font-bold text-white tracking-tight">
+              AIS<span className="text-cyan-400">.</span>
+            </span>
+          </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-gray-400 hover:text-cyan-400 transition-colors text-sm font-medium"
+                className="px-4 py-2 rounded-lg text-sm font-medium text-gray-400 hover:text-white hover:bg-white/[0.06] transition-all duration-200"
               >
                 {link.label}
               </Link>
             ))}
           </nav>
 
-          {/* CTA Button & Actions */}
-          <div className="flex items-center gap-4">
+          {/* CTA */}
+          <div className="hidden md:flex items-center gap-3">
             <button
-              onClick={scrollToDemo}
-              className="hidden sm:inline-flex px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition-transform hover:scale-105 active:scale-95 shadow-md"
+              className="px-5 py-2 rounded-lg text-sm font-semibold text-gray-300 hover:text-white hover:bg-white/[0.07] transition-all duration-200"
+              style={{ border: '1px solid rgba(255,255,255,0.09)' }}
             >
-              Get Started
+              Sign in
             </button>
-
-            {/* Mobile Menu Button */}
-            <button
-              className="md:hidden text-white p-1"
-              onClick={() => setMobileOpen(!mobileOpen)}
-              aria-label="Toggle navigation menu"
-            >
-              {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+            <button className="btn-primary px-5 py-2 rounded-lg text-sm">
+              Get Started →
             </button>
           </div>
+
+          {/* Mobile toggle */}
+          <button
+            className="md:hidden p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/[0.06] transition-colors"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={mobileOpen}
+          >
+            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
         </div>
 
         {/* Mobile Nav */}
@@ -86,29 +91,26 @@ export function Header() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.2 }}
-              className="md:hidden flex flex-col gap-3 overflow-hidden bg-slate-950 px-4 -mx-4 border-b border-white/10"
+              transition={{ duration: 0.2, ease: 'easeOut' }}
+              className="md:hidden overflow-hidden border-t border-white/[0.06]"
+              aria-label="Mobile navigation"
             >
-              <div className="pb-4 pt-2 flex flex-col gap-3">
+              <div className="py-3 flex flex-col gap-1">
                 {navLinks.map((link) => (
                   <Link
                     key={link.href}
                     href={link.href}
-                    className="text-gray-400 hover:text-cyan-400 transition-colors text-sm py-2 font-medium"
+                    className="px-4 py-3 rounded-lg text-sm font-medium text-gray-400 hover:text-white hover:bg-white/[0.06] transition-all"
                     onClick={() => setMobileOpen(false)}
                   >
                     {link.label}
                   </Link>
                 ))}
-                <button
-                  onClick={() => {
-                    setMobileOpen(false)
-                    scrollToDemo()
-                  }}
-                  className="w-full mt-2 px-4 py-3 rounded bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition-transform hover:scale-105 active:scale-95 shadow-md"
-                >
-                  Get Started
-                </button>
+                <div className="pt-2 px-1">
+                  <button className="btn-primary w-full py-3 rounded-lg text-sm">
+                    Get Started →
+                  </button>
+                </div>
               </div>
             </motion.nav>
           )}

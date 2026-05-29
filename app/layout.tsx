@@ -1,9 +1,20 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, DM_Sans } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+})
+
+const dmSans = DM_Sans({
+  subsets: ['latin'],
+  variable: '--font-dm-sans',
+  display: 'swap',
+  weight: ['300', '400', '500', '600', '700'],
+})
 
 // ─── Structured Data (JSON-LD) ───────────────────────────────────────────────
 const organizationSchema = {
@@ -106,8 +117,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} antialiased bg-slate-950 text-white`}>
+    <html lang="en" className={`${inter.variable} ${dmSans.variable}`}>
+      <body className={`${inter.className} antialiased`} style={{ background: 'var(--bg-base)', color: 'var(--foreground)' }}>
         {/* Skip to main content — accessibility */}
         <a
           href="#main-content"

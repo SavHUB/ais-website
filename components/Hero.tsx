@@ -2,58 +2,48 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Sparkles, Send, CheckCircle2, Loader2 } from 'lucide-react'
+import { Sparkles, Send, CheckCircle2, Loader2, Zap } from 'lucide-react'
 import InteractiveDemo from './InteractiveDemo'
 import AnimatedStat from './AnimatedStat'
 
 export function Hero() {
   const [showDemo, setShowDemo] = useState(false)
   const [messages, setMessages] = useState<{role: 'ai' | 'user', text: string}[]>([])
-
-  // Form state
   const [formData, setFormData] = useState({ name: '', email: '', company: '' })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
   const [showForm, setShowForm] = useState(false)
 
-  // Simulate an AI chat sequence
   useEffect(() => {
     const sequence = [
-      { role: 'ai', text: "Hi there — looks like you're exploring ways to grow your pipeline.", delay: 1000 },
-      { role: 'user', text: "Yes, we need more qualified leads coming in.", delay: 3000 },
-      { role: 'ai', text: "Understood. Are you currently capturing visitors from paid traffic, organic, or both?", delay: 4500 },
-      { role: 'user', text: "Mainly LinkedIn ads.", delay: 7000 },
-      { role: 'ai', text: "Good — LinkedIn traffic tends to be high intent. I can help qualify those visitors instantly and route the right ones to your calendar. Want to see how that works?", delay: 8500 }
+      { role: 'ai',   text: "Hi there — looks like you're exploring ways to grow your pipeline.", delay: 1000 },
+      { role: 'user', text: "Yes, we need more qualified leads coming in.",                       delay: 3000 },
+      { role: 'ai',   text: "Understood. Are you capturing visitors from paid traffic or organic?", delay: 4500 },
+      { role: 'user', text: "Mainly LinkedIn ads.",                                               delay: 7000 },
+      { role: 'ai',   text: "LinkedIn traffic is high intent. I can qualify those visitors instantly and route the right ones to your calendar. Want to see how?", delay: 8500 },
     ]
-
-    let timeouts: NodeJS.Timeout[] = []
-
+    const timeouts: NodeJS.Timeout[] = []
     sequence.forEach((msg) => {
-      const timeout = setTimeout(() => {
+      timeouts.push(setTimeout(() => {
         setMessages(prev => [...prev, { role: msg.role as 'ai' | 'user', text: msg.text }])
-      }, msg.delay)
-      timeouts.push(timeout)
+      }, msg.delay))
     })
-
     return () => timeouts.forEach(clearTimeout)
   }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-
     try {
       const response = await fetch('/api/lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       })
-
       if (response.ok) {
         setIsSuccess(true)
         setTimeout(() => {
-          setShowForm(false)
-          setIsSuccess(false)
+          setShowForm(false); setIsSuccess(false)
           setFormData({ name: '', email: '', company: '' })
         }, 3000)
       }
@@ -66,198 +56,234 @@ export function Hero() {
 
   return (
     <>
-      <section className="px-4 sm:px-6 lg:px-8 py-20 md:py-32 border-b border-white/10 overflow-hidden relative">
-        {/* Background glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-600/15 rounded-full blur-[120px] pointer-events-none" />
+      <section className="relative px-4 sm:px-6 lg:px-8 pt-24 pb-28 overflow-hidden">
 
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center relative z-10">
+        {/* ── Ambient background ── */}
+        <div aria-hidden className="absolute inset-0 pointer-events-none overflow-hidden">
+          {/* Primary glow */}
+          <div className="absolute top-[-10%] left-[20%] w-[600px] h-[600px] rounded-full opacity-[0.18]"
+            style={{ background: 'radial-gradient(circle, #0066ff 0%, transparent 70%)', filter: 'blur(80px)' }} />
+          {/* Secondary glow */}
+          <div className="absolute bottom-[10%] right-[15%] w-[400px] h-[400px] rounded-full opacity-[0.12]"
+            style={{ background: 'radial-gradient(circle, #00d4ff 0%, transparent 70%)', filter: 'blur(60px)' }} />
+          {/* Accent glow */}
+          <div className="absolute top-[40%] right-[30%] w-[300px] h-[300px] rounded-full opacity-[0.07]"
+            style={{ background: 'radial-gradient(circle, #6366f1 0%, transparent 70%)', filter: 'blur(50px)' }} />
+          {/* Grid */}
+          <div className="absolute inset-0 opacity-[0.025]"
+            style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)', backgroundSize: '80px 80px' }} />
+        </div>
+
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center relative z-10">
+
+          {/* ── Left: Copy ── */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="text-center lg:text-left"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-medium mb-6">
-              <Sparkles size={16} />
-              <span>AI-Powered Lead Engagement</span>
-            </div>
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
-              Turn your website into a{' '}
-              <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-                consistent source of qualified leads
-              </span>
+            {/* Badge */}
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1, duration: 0.5 }}
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium mb-8"
+              style={{ background: 'rgba(0,102,255,0.12)', border: '1px solid rgba(0,102,255,0.25)', color: '#60a5fa' }}
+            >
+              <Zap size={14} className="text-cyan-400" />
+              AI-Powered Lead Engagement
+            </motion.div>
+
+            {/* Headline */}
+            <h1 className="text-5xl md:text-[3.75rem] font-bold text-white mb-6 leading-[1.08] tracking-tight">
+              Turn visitors into{' '}
+              <span className="gradient-text-blue">qualified leads</span>
+              {' '}— automatically
             </h1>
-            <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto lg:mx-0 mb-8 leading-relaxed">
-              Most websites are passive. AIS gives yours a voice — engaging visitors at the right moment, 
+
+            <p className="text-lg text-gray-400 max-w-xl mx-auto lg:mx-0 mb-10 leading-relaxed">
+              Most websites are passive. AIS gives yours a voice — engaging visitors at the right moment,
               understanding their needs, and connecting the right ones with your team.
             </p>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mb-12">
+            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mb-14">
               <button
                 onClick={() => setShowDemo(true)}
-                className="px-8 py-3 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold shadow-lg hover:shadow-[0_0_24px_rgba(59,130,246,0.4)] transition-all hover:scale-105 active:scale-95"
+                className="btn-primary px-8 py-3.5 rounded-xl text-sm w-full sm:w-auto"
               >
-                See it in action
+                See it in action →
               </button>
               <button
                 onClick={() => setShowForm(true)}
-                className="px-8 py-3 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 text-white font-semibold transition-all hover:scale-105 active:scale-95"
+                className="btn-secondary px-8 py-3.5 rounded-xl text-sm w-full sm:w-auto"
               >
                 Estimate my ROI
               </button>
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-3 gap-4 text-left border-t border-white/10 pt-8">
-              <AnimatedStat
-                value={73}
-                label="More qualified leads"
-                isPercentage={true}
-                highlightColor="text-white"
-              />
+            <div className="grid grid-cols-3 gap-6 pt-8" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+              <AnimatedStat value={73} label="More qualified leads" isPercentage highlightColor="text-white" />
               <div>
-                <div className="text-2xl font-bold text-white">24/7</div>
+                <div className="text-2xl font-bold text-white tabular-nums">24/7</div>
                 <div className="text-xs text-gray-500 mt-1">Always on</div>
               </div>
-              <AnimatedStat
-                value="5–10x"
-                label="Higher conversion"
-                highlightColor="text-cyan-400"
-              />
+              <AnimatedStat value="5–10x" label="Higher conversion" highlightColor="text-cyan-400" />
             </div>
           </motion.div>
 
-          {/* AI Chat Mockup */}
+          {/* ── Right: Chat mockup ── */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="w-full max-w-md mx-auto lg:ml-auto"
           >
-            <div className="bg-blue-950/20 backdrop-blur-md border border-blue-500/20 rounded-xl overflow-hidden shadow-2xl relative">
-              {/* Header */}
-              <div className="bg-white/5 border-b border-white/10 p-4 flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center">
-                  <Sparkles size={18} className="text-white" />
-                </div>
-                <div>
-                  <h3 className="text-sm font-semibold text-white">AIS Sales Agent</h3>
-                  <div className="flex items-center gap-1">
-                    <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                    <span className="text-xs text-gray-400">Online</span>
-                  </div>
-                </div>
+            {/* Outer glow ring */}
+            <div className="relative">
+              <div className="absolute -inset-px rounded-2xl pointer-events-none"
+                style={{ background: 'linear-gradient(135deg, rgba(0,102,255,0.3), rgba(0,212,255,0.2), rgba(99,102,241,0.15))', padding: '1px' }}>
+                <div className="w-full h-full rounded-2xl" style={{ background: 'var(--bg-elevated)' }} />
               </div>
 
-              {/* Chat Area */}
-              <div className="p-4 h-[320px] overflow-y-auto flex flex-col gap-3">
-                {messages.length === 0 && (
-                  <div className="flex items-center gap-2 text-gray-500 text-sm mt-auto mb-2">
-                    <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce" />
-                    <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
-                    <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
+              <div className="relative glass-dark rounded-2xl overflow-hidden shadow-2xl"
+                style={{ boxShadow: '0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,102,255,0.15)' }}>
+
+                {/* Chat header */}
+                <div className="px-4 py-3.5 flex items-center gap-3" style={{ background: 'rgba(255,255,255,0.04)', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
+                  <div className="w-9 h-9 rounded-full flex items-center justify-center shrink-0"
+                    style={{ background: 'linear-gradient(135deg,#0066ff,#00d4ff)', boxShadow: '0 0 12px rgba(0,102,255,0.4)' }}>
+                    <Sparkles size={16} className="text-white" />
                   </div>
-                )}
-                {messages.map((msg, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    className={`max-w-[85%] rounded-2xl p-3 text-sm ${
-                      msg.role === 'ai'
-                        ? 'bg-blue-600/20 border border-blue-500/20 text-white self-start rounded-tl-sm'
-                        : 'bg-white/10 border border-white/5 text-gray-200 self-end rounded-tr-sm'
-                    }`}
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-semibold text-white">AIS Sales Agent</p>
+                    <div className="flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                      <span className="text-xs text-gray-500">Online now</span>
+                    </div>
+                  </div>
+                  {/* Window controls (decorative) */}
+                  <div className="flex gap-1.5">
+                    {['bg-red-500/60','bg-yellow-500/60','bg-green-500/60'].map(c => (
+                      <div key={c} className={`w-2.5 h-2.5 rounded-full ${c}`} />
+                    ))}
+                  </div>
+                </div>
+
+                {/* Messages */}
+                <div className="p-4 h-[300px] overflow-y-auto flex flex-col gap-3 scrollbar-hide">
+                  {messages.length === 0 && (
+                    <div className="flex items-end gap-1 mt-auto">
+                      {[0, 0.12, 0.24].map((d, i) => (
+                        <div key={i} className="w-2 h-2 rounded-full bg-gray-600 animate-bounce" style={{ animationDelay: `${d}s` }} />
+                      ))}
+                    </div>
+                  )}
+                  {messages.map((msg, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, y: 8, scale: 0.97 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      transition={{ duration: 0.25, ease: [0.16,1,0.3,1] }}
+                      className={`max-w-[88%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed ${
+                        msg.role === 'ai'
+                          ? 'self-start rounded-tl-sm text-white'
+                          : 'self-end rounded-tr-sm text-gray-200'
+                      }`}
+                      style={msg.role === 'ai'
+                        ? { background: 'rgba(0,102,255,0.18)', border: '1px solid rgba(0,102,255,0.2)' }
+                        : { background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.06)' }
+                      }
+                    >
+                      {msg.text}
+                    </motion.div>
+                  ))}
+                </div>
+
+                {/* Input */}
+                <div className="px-3 py-3 flex items-center gap-2" style={{ background: 'rgba(0,0,0,0.2)', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+                  <div className="flex-1 rounded-full px-4 py-2 text-sm text-gray-600" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.06)' }}>
+                    Type your message…
+                  </div>
+                  <button
+                    onClick={() => setShowDemo(true)}
+                    className="w-9 h-9 rounded-full flex items-center justify-center shrink-0 transition-transform hover:scale-105"
+                    style={{ background: 'linear-gradient(135deg,#0066ff,#00d4ff)', boxShadow: '0 2px 10px rgba(0,102,255,0.4)' }}
+                    aria-label="Open demo"
                   >
-                    {msg.text}
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* Input Area */}
-              <div className="p-3 bg-black/20 border-t border-white/10 flex items-center gap-2">
-                <div className="flex-1 bg-white/5 rounded-full px-4 py-2 text-sm text-gray-500 border border-white/5">
-                  Type your message...
-                </div>
-                <div className="w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center">
-                  <Send size={16} className="text-white -ml-0.5" />
+                    <Send size={14} className="text-white -ml-0.5" />
+                  </button>
                 </div>
               </div>
             </div>
           </motion.div>
         </div>
+
+        {/* Bottom divider glow */}
+        <div className="absolute bottom-0 left-0 right-0 divider-glow" />
       </section>
 
-      {/* Interactive Demo */}
       <InteractiveDemo isOpen={showDemo} onClose={() => setShowDemo(false)} />
 
-      {/* Lead Capture Form */}
+      {/* Lead Capture Modal */}
       {showForm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)' }}>
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="bg-blue-950/20 backdrop-blur-md border border-white/10 rounded-xl max-w-md w-full p-8 shadow-2xl relative"
+            initial={{ opacity: 0, scale: 0.95, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            className="glass-premium rounded-2xl max-w-md w-full p-8 shadow-2xl relative"
+            style={{ boxShadow: '0 25px 50px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.08)' }}
           >
             {!isSuccess ? (
               <>
                 <h2 className="text-2xl font-bold text-white mb-2">See your lead potential</h2>
-                <p className="text-gray-400 mb-6 text-sm">
-                  Tell us a little about your business and we'll show you what AIS could mean for your pipeline.
+                <p className="text-gray-400 mb-6 text-sm leading-relaxed">
+                  Tell us about your business and we'll show you what AIS could mean for your pipeline.
                 </p>
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <input
-                    type="text"
-                    required
-                    value={formData.name}
-                    onChange={(e) => setFormData({...formData, name: e.target.value})}
-                    placeholder="Your name"
-                    className="w-full px-4 py-3 rounded-lg bg-black/20 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition-colors"
-                  />
-                  <input
-                    type="email"
-                    required
-                    value={formData.email}
-                    onChange={(e) => setFormData({...formData, email: e.target.value})}
-                    placeholder="Work email"
-                    className="w-full px-4 py-3 rounded-lg bg-black/20 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition-colors"
-                  />
-                  <input
-                    type="text"
-                    required
-                    value={formData.company}
-                    onChange={(e) => setFormData({...formData, company: e.target.value})}
-                    placeholder="Company website"
-                    className="w-full px-4 py-3 rounded-lg bg-black/20 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition-colors"
-                  />
+                <form onSubmit={handleSubmit} className="space-y-3">
+                  {[
+                    { type: 'text',  key: 'name',    placeholder: 'Your name' },
+                    { type: 'email', key: 'email',   placeholder: 'Work email' },
+                    { type: 'text',  key: 'company', placeholder: 'Company website' },
+                  ].map(({ type, key, placeholder }) => (
+                    <input
+                      key={key}
+                      type={type}
+                      required
+                      value={formData[key as keyof typeof formData]}
+                      onChange={(e) => setFormData({ ...formData, [key]: e.target.value })}
+                      placeholder={placeholder}
+                      className="w-full px-4 py-3 rounded-xl text-white placeholder-gray-600 text-sm transition-colors"
+                      style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}
+                      onFocus={e => (e.target.style.borderColor = 'rgba(0,212,255,0.5)')}
+                      onBlur={e => (e.target.style.borderColor = 'rgba(255,255,255,0.1)')}
+                    />
+                  ))}
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] transition-all hover:scale-105 active:scale-95 mt-2 disabled:opacity-50 disabled:hover:scale-100 disabled:cursor-not-allowed"
+                    className="btn-primary w-full flex items-center justify-center gap-2 py-3 rounded-xl mt-1 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
                   >
-                    {isSubmitting ? <Loader2 size={20} className="animate-spin" /> : 'Get my free estimate'}
+                    {isSubmitting ? <Loader2 size={18} className="animate-spin" /> : 'Get my free estimate →'}
                   </button>
                 </form>
               </>
             ) : (
               <div className="py-8 text-center flex flex-col items-center">
-                <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ type: "spring", bounce: 0.5 }}
-                >
-                  <CheckCircle2 size={64} className="text-cyan-400 mb-4" />
+                <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring', bounce: 0.5 }}>
+                  <CheckCircle2 size={56} className="text-cyan-400 mb-4" />
                 </motion.div>
-                <h3 className="text-2xl font-bold text-white mb-2">We'll be in touch</h3>
-                <p className="text-gray-400">Expect a personalised breakdown of your lead potential within 24 hours.</p>
+                <h3 className="text-xl font-bold text-white mb-2">We'll be in touch</h3>
+                <p className="text-gray-400 text-sm">Expect a personalised breakdown of your lead potential within 24 hours.</p>
               </div>
             )}
-
             <button
               onClick={() => setShowForm(false)}
               aria-label="Close form"
-              className="absolute top-4 right-4 text-gray-400 hover:text-white bg-white/5 w-8 h-8 flex items-center justify-center rounded-full transition-colors"
+              className="absolute top-4 right-4 text-gray-500 hover:text-white w-8 h-8 flex items-center justify-center rounded-full transition-colors"
+              style={{ background: 'rgba(255,255,255,0.06)' }}
             >
               ✕
             </button>
