@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { Menu, X } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
+import { Logo } from '@/components/Logo'
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -35,17 +36,7 @@ export function Header() {
         <div className="flex items-center justify-between h-16">
 
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5">
-            <div
-              className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold text-sm shrink-0"
-              style={{ background: 'linear-gradient(135deg,#0066ff,#00d4ff)', boxShadow: '0 0 16px rgba(0,102,255,0.4)' }}
-            >
-              AI
-            </div>
-            <span className="text-lg font-bold text-white tracking-tight">
-              AIS<span className="text-cyan-400">.</span>
-            </span>
-          </Link>
+          <Logo size={38} />
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">

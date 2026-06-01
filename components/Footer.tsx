@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { Logo } from '@/components/Logo'
 
 const links = {
   Product: [
@@ -14,8 +15,8 @@ const links = {
     { label: 'Contact', href: 'mailto:hello@ais-machine.com' },
   ],
   Legal: [
-    { label: 'Privacy Policy',   href: '#' },
-    { label: 'Terms of Service', href: '#' },
+    { label: 'Privacy Policy',   href: '/privacy-policy' },
+    { label: 'Terms of Service', href: '/terms' },
   ],
 }
 
@@ -29,15 +30,9 @@ export function Footer() {
 
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
-            <Link href="/" className="flex items-center gap-2 mb-4 w-fit">
-              <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold text-sm"
-                style={{ background: 'linear-gradient(135deg,#0066ff,#00d4ff)', boxShadow: '0 0 14px rgba(0,102,255,0.35)' }}>
-                AI
-              </div>
-              <span className="text-lg font-bold text-white tracking-tight">
-                AIS<span className="text-cyan-400">.</span>
-              </span>
-            </Link>
+            <div className="mb-4">
+              <Logo size={36} showSubtitle={false} />
+            </div>
             <p className="text-gray-500 text-sm leading-relaxed mb-5 max-w-[220px]">
               AI-powered lead engagement that turns website visitors into qualified pipeline.
             </p>
